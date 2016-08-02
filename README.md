@@ -17,7 +17,7 @@ $ composer install --prefer-dist
 # This is secret key to access the home page with route /_{secret}
 SECRET=verysecret
 
-# CouchDB config
+# CouchDB config, register a small free instance at CloudAnt.com
 DB_URL=https://someone.cloudant.com
 DB_NAME=notifications
 DB_USER=user
@@ -45,5 +45,5 @@ curl -XPOST 'message=hello' http://[your-web-url]/[type]
 With type is 1 of 4 types :
 - `s` : Success
 - `i` : Info
-- `w' : Warning
+- `w` : Warning
 - `e` : Error
