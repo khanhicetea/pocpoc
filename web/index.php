@@ -38,6 +38,7 @@ function createNewNotification($type, $message) {
     ]);
 }
 
+date_default_timezone_set(getenv('TIMEZONE'));
 $app = new \Slim\App;
 
 $app->get('/_{secret}', function (Request $request, Response $response) {
