@@ -47,3 +47,28 @@ With type is 1 of 4 types :
 - `i` : Info
 - `w` : Warning
 - `e` : Error
+
+### Tracking status shell commands
+
+Add this function to your `~/.bashrc` file
+
+```
+poc() {
+    "$@"
+    ret=$?
+    if [[ $ret -eq 0 ]]
+    then
+        curl -s -XPOST -d "message=Successfully ran [ $* ]" https://[your-pocpoc-url]/s
+    else
+        curl -s -XPOST -d "message=Failed ran [ $* ]" https://[your-pocpoc-url]/e
+        exit $ret
+    fi
+}
+```
+
+then try some commands with `poc` as a prefix, like
+
+```
+$ poc ping -c google.com
+$ poc rm a_non_exists_file
+```
