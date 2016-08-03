@@ -11,7 +11,7 @@ $dotenv->load();
 function getFullDbUrl() {
     $url = sprintf('%s/%s', getenv('DB_URL'), getenv('DB_NAME'));
     $pos = strpos($url, '://');
-    $full_url = substr($url, 0, $pos + 3) . sprint('%s:%s', getenv('DB_USER'), getenv('DB_PASS')) . '@' . substr($url, $pos + 3);
+    $full_url = substr($url, 0, $pos + 3) . sprintf('%s:%s', getenv('DB_USER'), getenv('DB_PASS')) . '@' . substr($url, $pos + 3);
     return $full_url;
 }
 
