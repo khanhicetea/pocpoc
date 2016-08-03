@@ -9,7 +9,10 @@ $dotenv = new Dotenv\Dotenv(dirname(__DIR__));
 $dotenv->load();
 
 function getFullDbUrl() {
-    return sprintf('%s/%s', getenv('DB_URL'), getenv('DB_NAME'));
+    $url = sprintf('%s/%s', getenv('DB_URL'), getenv('DB_NAME'));
+    $pos = strpos($url, '://');
+    $full_url = substr($url, 0, $pos + 3) . sprint('%s:%s', getenv('DB_USER'), getenv('DB_PASS')) . '@' . substr($url, $pos + 3);
+    return $full_url;
 }
 
 function createNewNotification($type, $message) {
@@ -27,7 +30,7 @@ function createNewNotification($type, $message) {
     $notification_type = $types[strtolower($type)] ?? 'default';
     $sent_at = date('d/m/Y H:i:s');
     $client = new \GuzzleHttp\Client();
-    $res = $client->request('POST', getFullDbUrl(), [
+    $res = $client->request('POST', sprintf('%s/%s', getenv('DB_URL'), getenv('DB_NAME')), [
         'auth' => [getenv('DB_USER'), getenv('DB_PASS')],
         'json' => [
             '_id' => (string) time(),
